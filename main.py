@@ -1,14 +1,18 @@
-import discord, os, config
+import os
+
+from discord import Intents, Game
 from discord.ext import commands
+
+import config
 
 token = config.token
 prefix = ['a.', 'A.']
-bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all(), help_command=None)
+bot = commands.Bot(command_prefix=prefix, intents=Intents.all(), help_command=None)
 
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Game(name="prefix is a. or A."))
+    await bot.change_presence(activity=Game(name="prefix is a. or A."))
     for file in os.listdir('./cogs'):
         if file.endswith('.py'):
             await bot.load_extension("cogs." + file[:-3])

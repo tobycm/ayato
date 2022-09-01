@@ -1,8 +1,10 @@
-import discord, random, redis, config
+from aioredis import Redis
 
 from discord.ext import commands
 
-db = redis.Redis(
+import config
+
+db = Redis(
     host=config.host,
     port=config.port, 
     username=config.username,

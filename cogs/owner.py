@@ -1,4 +1,3 @@
-import discord, os, sys, asyncio
 from discord.ext import commands
 
 
