@@ -1,7 +1,7 @@
-import discord, os
+import discord, os, config
 from discord.ext import commands
 
-token = 'OTk5OTYxOTY1Njk2OTI5ODMy.GuwINV.QCk1BgxxeJXtqJdRVEuKhuXkFHGIqYvD8cjgd0'
+token = config.token
 prefix = ['a.', 'A.']
 bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all(), help_command=None)
 
