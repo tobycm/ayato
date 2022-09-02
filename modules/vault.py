@@ -2,7 +2,7 @@
 Vault for the bot secrets and variables.
 """
 
-from json import load
+from jstyleson import load
 
 
 def get_bot_config(value: str) -> str:
