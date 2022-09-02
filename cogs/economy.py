@@ -40,30 +40,35 @@ class Economy(Cog):
 
         if money is None:
             return await ctx.reply('Bạn chưa tạo tài khoản!')
-        return await ctx.reply(f"Bạn có ${money.decode()}")
+        return await ctx.reply(f"Bạn có ${money}")
 
     @command(description = 'Chơi đê :)', aliases = ['cf'])
-    async def coinflip(self, ctx: Context, *, coin: int = None):
-            money = await get_money(self.bot.redis_ins, ctx.author.id)
+    async def coinflip(self, ctx: Context, coin: int = None):
+        """
+        Gamble with coin flip lmao
+        """
 
-            if money is None:
-                return await ctx.reply('Bạn chưa tạo tài khoản!')
-            if not coin:
-                await ctx.reply("Đặt tiền đê?")
-            if coin == 0:
-                await ctx.reply("Đặt cao lên :)")
-            if coin == 'all':
-                coin = 50000
-            if coin < money.decode():
-                await ctx.reply('Bạn không đủ tiền để chơi ;)')
-            c = random.randint(0, 1)
-            if c == 0:
-                await set_money(self.bot.redis_ins, ctx.author.id, money + coin)
-                await ctx.reply('win')
-            if c == 1:
-                await set_money(self.bot.redis_ins, ctx.author.id, money - coin)
-                await ctx.reply('lose')
-        
+        money = await get_money(self.bot.redis_ins, ctx.author.id)
+
+        if money is None:
+            return await ctx.reply('Bạn chưa tạo tài khoản!')
+        if not coin:
+            return await ctx.reply("Đặt tiền đê?")
+        if coin == 0:
+            return await ctx.reply("Đặt cao lên :)")
+        if coin > money:
+            return await ctx.reply('Bạn không đủ tiền để chơi ;)')
+        if coin == 'all':
+            coin = money
+        chance = random.randint(0, 1)
+        if chance == 0:
+            new_money = money + coin
+            await ctx.reply('win')
+        if chance == 1:
+            new_money = money - coin
+            await ctx.reply('lose')
+        await set_money(self.bot.redis_ins, ctx.author.id, new_money)
+
 
 async def setup(bot: CustomBot):
     """
