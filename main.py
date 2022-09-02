@@ -1,6 +1,7 @@
 import os
 
 from discord import Intents, Game, Message
+from discord.ext import tasks
 from discord.ext.commands import CommandNotFound
 
 from modules.vault import get_bot_config
@@ -13,11 +14,12 @@ bot = CustomBot(
     intents=Intents.all()
 )
 
-DISCORD_TOKEN = get_bot_config("DISCORD_TOKEN")
+DISCORD_TOKEN = get_bot_config("BOT_TOKEN")
 
 
 @bot.event
 async def on_ready():
+    await bot.loop.create_task(startup_tasks())
     for file in os.listdir('./cogs'):
         if file.endswith('.py'):
             await bot.load_extension("cogs." + file[:-3])
@@ -56,7 +58,5 @@ async def startup_tasks():
             name="prefix is a. or A."
         )
     )
-
-bot.setup_hook = startup_tasks
 
 bot.run(DISCORD_TOKEN)
