@@ -57,6 +57,6 @@ async def startup_tasks():
         )
     )
 
-bot.loop.create_task(startup_tasks())
+bot.setup_hook = startup_tasks
 
 bot.run(DISCORD_TOKEN)
