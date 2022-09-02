@@ -36,7 +36,7 @@ class CustomHelp(MinimalHelpCommand):
         await channel.send(embed=embed)
 
 
-class MyCog(Cog):
+class HelpCog(Cog):
     """
     Cog responsible for CustomHelp
     """
@@ -49,3 +49,10 @@ class MyCog(Cog):
 
     async def cog_unload(self):
         self.bot.help_command = self._original_help_command
+
+async def setup(bot: CustomBot):
+    """
+    Run at setup
+    """
+
+    await bot.add_cog(HelpCog(bot))
