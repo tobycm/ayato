@@ -1,0 +1,7 @@
+// Bot Settings
+// Use git update-index --skip-worktree config/settings.json
+// To skip tracking this file (recommended)
+
+{
+    "DISCORD_TOKEN": ""
+}
